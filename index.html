@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Shopify Product Customizer</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body{
+			font-family: Arial, sans-serif;
+			background: #f2f2f2;
+			padding: 30px;
+		}
+		.container{
+			max-width: 1200px;
+			margin: auto;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 30px;
+		}
+		/* PRODUCT PREVIEW */
+		.preview{
+			flex: 1;
+			min-width: 300px;
+			background: white;
+			padding: 30px;
+			border-radius: 20px;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+			text-align: center;
+		}
+		.hoodie{
+			width: 300px;
+			height: 400px;
+			background: black;
+			border-radius: 30px;
+			margin: 20px auto;
+			position: relative;
+			transition: 0.3s;
+		}
+		.custom-text{
+			position: absolute;
+			top: 80px;
+			width: 100%;
+			color: white;
+			font-size: 28px;
+			font-weight: bold;
+		}
+		.logo-preview{
+			position: absolute;
+			top: 180px;
+			left: 50%;
+			transform: translateX(-50%);
+			max-width: 120px;
+			max-height: 120px;
+		}
+		/* CUSTOMIZER */
+		.customizer{
+			flex: 1;
+			min-width: 300px;
+			background: white;
+			padding: 30px;
+			border-radius: 20px;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+		}
+		.customizer h2{
+			margin-bottom: 20px;
+		}
+		.section{
+			margin-bottom: 25px;
+		}
+		.section label{
+			display: block;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+		.colors{
+			display: flex;
+			gap: 15px;
+		}
+		.color{
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			cursor: pointer;
+			border: 3px solid #ddd;
+		}
+		.black{
+			background: black;
+		}
+		.red{
+			background: red;
+		}
+		.blue{
+			background: blue;
+		}
+		.green{
+			background: green;
+		}
+		input[type="text"]{
+			width: 100%;
+			padding: 12px;
+			border-radius: 10px;
+			border: 1px solid #ccc;
+		}
+		input[type="file"]{
+			width: 100%;
+		}
+		button{
+			width: 100%;
+			padding: 15px;
+			background: black;
+			color: white;
+			border: none;
+			border-radius: 12px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+		button:hover{
+			opacity: 0.9;
+		}
+		/* MOBILE */
+		@media(max-width:768px){
+			.container{
+				flex-direction: column;
+			}
+			.hoodie{
+				width: 250px;
+				height: 350px;
+			}
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	
+	<!-- PRODUCT PREVIEW -->
+
+	<div class="preview">
+		
+		<h1>Live Product Preview</h1>
+
+		<div class="hoodie" id="hoodie">
+			
+			<div class="custom-text" id="previewText">
+				TEAM ALPHA
+			</div>
+
+			<img id="logoPreview" class="logo-preview">
+		</div>
+	</div>
+
+	<!-- CUSTOMIZER -->
+
+	<div class="customizer">
+		
+		<h2>Custom Hoodie Builder</h2>
+
+		<!-- COLORS -->
+
+		<div class="section">
+			
+			<label>Choose Color</label>
+
+			<div class="colors">
+				
+				<div class="color black" onclick="changeColor('black')"></div>
+
+				<div class="color red" onclick="changeColor('red')"></div>
+
+				<div class="color blue" onclick="changeColor('blue')"></div>
+
+				<div class="color green" onclick="changeColor('green')"></div>
+
+			</div>
+
+		</div>
+
+		<!-- CUSTOM TEXT -->
+
+		<div class="section">
+			
+			<label>Add Custom Text</label>
+
+			<input type="text" id="textInput" placeholder="Write your text">
+
+		</div>
+
+		<!-- UPLOAD IMAGE -->
+
+		<div class="section">
+			
+			<label>Upload Logo / Image</label>
+
+			<input type="file" id="logoInput" accept="image/*">
+
+		</div>
+
+		<!-- BUTTON -->
+
+		<button>
+			Add Customized Product
+		</button>
+	</div>
+</div>
+
+<script>
+	/* CHANGE COLOR */
+
+	function changeColor(color){
+		document.getElementById("hoodie").style.background = color;
+	}
+
+	/* UPDATE TEXT */
+
+	document.getElementById("textInput").addEventListener("keyup", function(){
+		document.getElementById("previewText").innerText = this.value;
+	});
+
+	/* UPLOAD IMAGE */
+
+	document.getElementById("logoInput").addEventListener("change", function(event){
+		const file = event.target.files[0];
+
+		if(file){
+			const reader = new FileReader();
+
+			reader.onload = function(e){
+				document.getElementById("logoPreview").src = e.target.result;
+			}
+
+			reader.readAsDataURL(file);
+		}
+	});
+</script>
+</body>
+</html>
